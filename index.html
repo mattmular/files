@@ -31,6 +31,7 @@
             grid-template-columns: auto auto auto;
             column-gap: 20px;
             row-gap: 32px;
+            justify-items: center;
             height: 100%;
             min-width: 380px;
         }
@@ -50,9 +51,9 @@
             text-align: center;
             display: inline;
             background-color: #b9b9b9;
-            line-height: 133px;
-            width: 133px;
-            height: 133px;
+            line-height: 125px;
+            width: 125px;
+            height: 125px;
         }
 
         img {
@@ -71,7 +72,6 @@
             #table1 {
                 width: 50%;
                 max-width: 600px;
-                
             }
 
             #table2 {
@@ -84,10 +84,16 @@
     </style>
     <head>
         <title>Beamsmasher Code</title>
-        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="viewport" content="user-scalable=no">
     </head>
     <body>
         <div id="center">
+            <div id="table2">
+                <h1 style="grid-column:1/4;height:20px;">CODE</h1>
+                <h2 id="first"></h2>
+                <h2 id="second"></h2>
+                <h2 id="third"></h2>
+            </div>
             <div id="table1">
                 <h1>X</h1>
                 <h1>Y</h1>
@@ -110,12 +116,6 @@
                 <img class="colx" onclick="setx(22, this)" src="twentytwo.png">
                 <img class="coly" onclick="sety(22, this)" src="twentytwo.png">
                 <img class="colz" onclick="setz(22, this)" src="twentytwo.png">
-            </div>
-            <div id="table2">
-                <h1 style="grid-column:1/4;height:20px;">CODE</h1>
-                <h2 id="first"></h2>
-                <h2 id="second"></h2>
-                <h2 id="third"></h2>
             </div>
         </div>
     </body>
