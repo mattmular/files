@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <style> 
+        html {
+            height: 100%
+        }
+        
+        body{
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            max-height:100%
+        }
+        #table1 {
+            margin-left:auto;
+            margin-right: auto;
+            max-width: 300px;
+            height: 60%
+        }
+
+        #table2 {
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        th {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: 42pt;
+        }
+        
+        td {
+            padding: 10px;
+            font-size: 38pt;
+        }
+
+        img {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .output {
+            display:inline-block;
+            background-color: grey;
+        }
+    </style>
+    <head></head>
+    <body>
+        <table id="table1">
+            <tbody id="tbody1">
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>Z</th>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(0, this)"><img src="zero.png"></td>
+                <td class="coly" onclick="sety(0, this)"><img src="zero.png"></td>
+                <td class="colz" onclick="setz(0, this)"><img src="zero.png"></td>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(10, this)"><img src="ten.png"></td>
+                <td class="coly" onclick="sety(10, this)"><img src="ten.png"></td>
+                <td class="colz" onclick="setz(10, this)"><img src="ten.png"></td>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(11, this)"><img src="eleven.png"></td>
+                <td class="coly" onclick="sety(11, this)"><img src="eleven.png"></td>
+                <td class="colz" onclick="setz(11, this)"><img src="eleven.png"></td>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(20, this)"><img src="twenty.png"></td>
+                <td class="coly" onclick="sety(20, this)"><img src="twenty.png"></td>
+                <td class="colz" onclick="setz(20, this)"><img src="twenty.png"></td>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(21, this)"><img src="twentyone.png"></td>
+                <td class="coly" onclick="sety(21, this)"><img src="twentyone.png"></td>
+                <td class="colz" onclick="setz(21, this)"><img src="twentyone.png"></td>
+            </tr>
+            <tr>
+                <td class="colx" onclick="setx(22, this)"><img src="twentytwo.png"></td>
+                <td class="coly" onclick="sety(22, this)"><img src="twentytwo.png"></td>
+                <td class="colz" onclick="setz(22, this)"><img src="twentytwo.png"></td>
+            </tr>
+        </tbody>
+        </table>
+        <table id="table2">
+        <tbody id="tbody2">
+            <tr>
+                <th>CODE</th>
+            </tr>
+            <tr>
+                <td class="output" id="first">0</td>
+                <td class="output" id="second">0</td>
+                <td class="output" id="third">0</td>
+            </tr>
+        </tbody>
+        </table>
+
+    </body>
+</html>
+
+
+
+<script>
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    
+    function setx(n, e) {
+        x = n;
+        var elements = document.getElementsByClassName("colx");
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style["background-color"] = 'transparent';
+        }
+        e.style["background-color"] = 'red';
+        recalc();
+    }
+
+    function sety(n, e) {
+        y = n;
+        var elements = document.getElementsByClassName("coly");
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style["background-color"] = 'transparent';
+        }
+        e.style["background-color"] = 'red';
+        recalc();
+    }
+
+    function setz(n, e) {
+        z = n;
+        var elements = document.getElementsByClassName("colz");
+        for (i = 0; i < elements.length; i++) {
+            elements[i].style["background-color"] = 'transparent';
+        }
+        e.style["background-color"] = 'red';
+        recalc();
+    }
+
+    function recalc() {
+        document.getElementById("first").innerHTML = ""+(2*x+11);
+        document.getElementById("second").innerHTML = ""+((2*z+y)-5);
+        document.getElementById("third").innerHTML = ""+(Math.abs((y+z)-x));
+    }
+</script>
