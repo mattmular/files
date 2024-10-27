@@ -13,6 +13,7 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            gap: 40px;
 
         }
 
@@ -21,9 +22,8 @@
             grid-template-columns: auto auto auto;
             column-gap: 4px;
             row-gap: 4px;
-            width: 380px;
-            max-width: 400px;
-            height: 60%
+            min-width: 340px;
+            height: 80%
         }
 
         #table2 {
@@ -31,7 +31,7 @@
             grid-template-columns: auto auto auto;
             column-gap: 20px;
             row-gap: 32px;
-            height: 280px;
+            height: 100%;
             min-width: 380px;
         }
 
@@ -61,6 +61,26 @@
             height:100%;
         }
 
+        @media (max-width: 1000px) {
+            #center {
+                flex-direction: column;
+                align-items: center;
+                gap: 0px;
+            }
+
+            #table1 {
+                width: 50%;
+                max-width: 600px;
+                
+            }
+
+            #table2 {
+                width: 50%;
+                height: 100%;
+                min-width: 380px;
+            }
+        }   
+
     </style>
     <head></head>
     <body>
@@ -88,7 +108,6 @@
                 <img class="coly" onclick="sety(22, this)" src="twentytwo.png">
                 <img class="colz" onclick="setz(22, this)" src="twentytwo.png">
             </div>
-            <div style="margin:20px;"></div>
             <div id="table2">
                 <h1 style="grid-column:1/4;height:20px;">CODE</h1>
                 <h2 id="first"></h2>
@@ -98,8 +117,6 @@
         </div>
     </body>
 </html>
-
-
 
 <script>
     let x = 0;
