@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Valheim Roulette</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="sidebar" class="sidebar-closed">
+            <label for="bowPercentage" style="white-space: nowrap;">Bow chance</label>
+            <p id="bowPercentageNumber" style="display: inline;">50%</p>
+            <input id="bowPercentage" type="range" min="0" max="100" value="50"/>
+
+            <label for="magePercentage" style="white-space: nowrap;">Mage chance</label>
+            <p id="magePercentageNumber" style="display: inline;">35%</p>
+            <input id="magePercentage" type="range" min="0" max="100" value="35"/>
+
+            <label for="mageQuantity" style="white-space: nowrap;">Mage weapons</label>
+            <p id="mageQuantityNumber" style="display: inline;">2</p>
+            <input id="mageQuantity" type="range" min="1" max="4" value="2"/>
+            
+        </div>
+        <img id="settings-button" src="gear.png" onclick="toggleSidebar()"/>
+
+        <img id="rules" src="book.png" onclick="rulesAlert()"/>
+        
+        <div id="center">
+            <h1>Valheim Roulette</h1>
+            <label for="biome">current biome:</label>
+            <h2 id="biome"></h2>
+        </br>
+            <button onClick="randomizeNext()">roll next</button>
+            <button onClick="reset()">reset</button>
+            <h2 id="randomLoadout"></h2>
+        </div>
+
+        <div id="log-window">
+            <h1>log</h1>
+            <div id="logs"></div>
+        </div>
+    </body>
+</html>
+
+<script>
+var currentBiome = 0;
+document.getElementById("bowPercentageNumber").innerText = document.getElementById("bowPercentage").value + '%';
+document.getElementById("magePercentageNumber").innerText = document.getElementById("magePercentage").value + '%';
+document.getElementById("mageQuantityNumber").innerText = document.getElementById("mageQuantity").value;
+
+function randomizeNext() {
+    currentBiome = currentBiome + 1;
+    if (currentBiome > 7) currentBiome = 7
+    document.getElementById("randomLoadout").innerText = getLoadout(currentBiome, 1.0, 2)
+}
+
+function getLoadout(biome, bowPercentage, magicWeapons) {
+    var bowPercentage = document.getElementById("bowPercentage").value / 100.0;
+    var magePercentage = document.getElementById("magePercentage").value / 100.0;
+    var mageQuantity = document.getElementById("mageQuantity").value;
+    document.getElementById("biome").innerText = biomes[biome].name;
+    var loadout = ""
+    var mage = false;
+    if (biomes[biome].robes.length > 0 && Math.random() < magePercentage) mage = true;
+    var bow = false;
+    if (biomes[biome].ranged.length > 0 && Math.random() < bowPercentage) bow = true;
+    if (mage){
+        loadout += fetchRoll(biomes[biome].magic, mageQuantity);
+    } else {
+        loadout += fetchRoll(biomes[biome].melee, 1);
+    }
+    if (bow) {
+        loadout += fetchRoll(biomes[biome].ranged, 1);
+    }
+    if (!mage) {
+        loadout += fetchRoll(biomes[biome].shield, 1);
+        loadout += fetchRoll(biomes[biome].armor, 1);
+    } else {
+        loadout += fetchRoll(biomes[biome].robes, 1);
+    }
+
+    var log = document.createElement("div");
+    log.classList.add("log");
+    var para = document.createElement("p");
+    log.appendChild(para);
+    var text = document.createTextNode("Biome: " + biomes[biome].name + "\n" + loadout);
+    para.appendChild(text);
+    document.getElementById("logs").appendChild(log);
+
+    return loadout;
+}  
+
+function fetchRoll(arr, qty) {
+    if (qty > 1) {
+        var copy = structuredClone(arr);
+        var str = "";
+        for (i=0;i < qty; i++){
+            if (copy.length < 1) break;
+            str += copy.splice(Math.floor(Math.random() * copy.length), 1) + "\n"
+        }
+        return str;
+    } else {
+        return arr[Math.floor(Math.random() * arr.length)] + "\n"
+    }
+}
+
+function reset() {
+    currentBiome = 0;
+    document.getElementById("biome").innerText = "";
+    document.getElementById("randomLoadout").innerText = "";
+}
+
+var sidebarOpen = true;
+function toggleSidebar() {
+    if (sidebarOpen) {
+        document.getElementById("sidebar").classList.remove("sidebar-open");
+        document.getElementById("sidebar").classList.add("sidebar-closed");
+        sidebarOpen = false;
+    } else {
+        document.getElementById("sidebar").classList.add("sidebar-open");
+        document.getElementById("sidebar").classList.remove("sidebar-closed");
+        sidebarOpen = true;
+    }
+}
+
+document.getElementById("bowPercentage").addEventListener('input', (event) => {
+    document.getElementById("bowPercentageNumber").innerText = event.target.value + '%';
+})
+
+document.getElementById("magePercentage").addEventListener('input', (event) => {
+    document.getElementById("magePercentageNumber").innerText = event.target.value + '%';
+})
+
+document.getElementById("mageQuantity").addEventListener('input', (event) => {
+    document.getElementById("mageQuantityNumber").innerText = event.target.value;
+})
+
+function rulesAlert() {
+    alert("1. Each biome you get 1 melee weapon or 2 mage weapons (configurable)\n\n2. You have a chance to get a bow upgrade (configurable)\n\n3. If you rolled a melee weapon you get 1 shield\n\n4. Finally, you get an armor set corresponding to your weapon type")
+}
+
+
+var biomes = {
+    "1":{
+        name: "Meadows",
+        melee: ["Club","Stagbreaker","Flint spear","Flint knife"],
+        magic: [],
+        ranged: ["Crude bow"],
+        shield: ["Wood shield","Wood tower shield"],
+        armor: ["Leather armor"],
+        robes: []
+    },
+    "2":{
+        name: "Black Forest",
+        melee: ["Bronze mace","Bronze sword","Copper knife","Bronze spear","Paws of the Bear"],
+        magic: [],
+        ranged: ["Finewood bow"],
+        shield: ["Bronze buckler","Bone tower shield"],
+        armor: ["Bronze armor","Troll leather armor","Patterns of the Bear"],
+        robes: []
+    },
+    "3":{
+        name: "Swamp",
+        melee: ["Iron mace","Iron sledge","Iron sword","Ancient bark spear","Iron atgeir","Abyssal razor","Battleaxe"],
+        magic: [],
+        ranged: ["Huntsman bow"],
+        shield: ["Banded shield","Iron buckler","Iron tower shield"],
+        armor: ["Iron armor","Root armor"],
+        robes: []
+    },
+    "4":{
+        name: "Mountain",
+        melee: ["Frostner","Silver sword","Fang spear","Silver knife","Flesh rippers","Crystal battleaxe"],
+        magic: [],
+        ranged: ["Draugr Fang"],
+        shield: ["Silver shield","Serpent scale shield"],
+        armor: ["Silver armor","Fenris armor"],
+        robes: []
+    },
+    "5":{
+        name: "Plains",
+        melee: ["Porcupine","Black metal sword","Black metal atgeir","Black metal knife","Vilebone maulclaws","Black metal battleaxe"],
+        magic: [],
+        ranged: [],
+        shield: ["Black metal shield","Black metal tower shield"],
+        armor: ["Padded armor","Vilebone armor"],
+        robes: []
+    },
+    "6":{
+        name: "Mistlands",
+        melee: ["Demolisher","Mistwalker","Krom","Carapace spear","Himminafl","Skoll and Hati","Skull splittur"],
+        magic: ["Staff of Embers","Staff of Frost","Dead Raiser"],
+        ranged: ["Spinesnap","Arbalest"],
+        shield: ["Carapace Buckler","Carapace Shield"],
+        armor: ["Carapace armor"],
+        robes: ["Eitr-weave robes + Staff of Protection"]
+    },
+    "7":{
+        name: "Ashlands",
+        melee: ["Flametal mace","Nidhogg","Slayer","Splitnir"],
+        magic: ["Dundr","Staff of the Wild","Staff of Fracturing","Trollstav"],
+        ranged: ["Ash fang","Ripper"],
+        shield: ["Flametal shield", "Flametal tower shield"],
+        armor: ["Ask armor", "Flametal armor"],
+        robes: ["Embla robes + Staff of Protection"]
+    }
+}
+</script>

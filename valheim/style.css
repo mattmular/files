@@ -1,0 +1,118 @@
+html {
+    height: 100%;
+}
+
+body {
+    position: relative;
+    margin: 0px;
+    height: 100%;
+    background: #3a3d43;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#center {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+#center button {
+    font-size: 30px;
+}
+
+#center p {
+    
+    text-align: center;
+}
+
+#biome {
+    display: inline;
+}
+
+#settings-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    background-color: rgb(45, 48, 55);
+    border: 4px solid rgb(194, 191, 199);
+    border-radius: 16px;
+}
+
+#rules {
+    position: absolute;
+    top: 0;
+    left: 90px;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    background-color: rgb(45, 48, 55);
+    border: 4px solid rgb(194, 191, 199);
+    border-radius: 16px;
+}
+
+#sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin: 0px;
+    padding-top: 100px;
+    background-color:rgb(24, 24, 26);
+    height: 100%;
+    overflow: hidden;
+    transition: width 1s, padding 1s;
+
+}
+
+#sidebar label {
+    margin-top: 50px;
+}
+
+.sidebar-open {
+    width: 200px;
+    padding: 10px;
+}
+
+.sidebar-closed {
+    width: 0px;
+    padding: 0px;
+}
+
+#log-window {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
+    background-color: rgb(38, 38, 41);
+    width: 200px;
+    min-height: 50px;
+}
+
+#log-window  h1 {
+    text-align: center;
+}
+
+#logs {
+    padding: 5px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.log {
+    width: 100%;
+    text-align: center;
+    white-space: pre;
+    overflow-wrap: break-word;
+}
+
+.log:hover {
+    background-color: rgb(26, 26, 26);
+}
+
